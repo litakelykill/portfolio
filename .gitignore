@@ -6,13 +6,9 @@
 assets/images/
 *.jpg
 *.jpeg
-*.png
 *.gif
 *.webp
 *.ico
-
-# -- SVG --
-*.svg
 
 # -- CV (données personnelles) --
 assets/cv.pdf
