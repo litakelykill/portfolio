@@ -1,0 +1,32 @@
+# ============================================================
+# PORTFOLIO – .gitignore
+# ============================================================
+
+# -- Images --
+assets/images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.ico
+
+# -- SVG --
+*.svg
+
+# -- CV (données personnelles) --
+assets/cv.pdf
+
+# -- Système --
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -- Éditeurs --
+.vscode/
+.idea/
+*.suo
+*.user
+
+# -- Logs --
+*.log

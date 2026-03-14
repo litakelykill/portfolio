@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio – Étudiant M1 Informatique · Développeur Full Stack" />
+  <title>Sitraka Ralamboranto | Software Engineer - Machine Learning</title>
+  <link rel="icon" href="assets/icons/rick.svg" type="image/svg+xml" />
+
+  <!-- Google Fonts : Syne (titres forts) + DM Sans (corps lisible) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="navbar" id="navbar">
+    <a href="#hero" class="nav-logo">
+      <img src="assets/icons/morty.svg" alt="Logo" class="nav-logo-icon" />
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#experience">Parcours</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-controls">
+      <button class="theme-toggle" id="themeToggle" aria-label="Basculer le thème">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <p class="hero-label fade-in">Étudiant M1 Informatique · Disponible pour un stage, une alternance, ou un emploi</p>
+      <h1 class="hero-title fade-in">
+        Bonjour, je suis<br />
+        <span class="highlight">Sitraka Ralamboranto</span>
+      </h1>
+      <div class="hero-roles fade-in">
+        <span class="role-tag">Développeur Web Junior</span>
+        <span class="role-tag">Software Engineer</span>
+        <span class="role-tag">Machine Learning</span>
+      </div>
+      <p class="hero-sub fade-in">
+        Développeur Full Stack passionné par la conception de solutions robustes
+        et d'interfaces pensées pour l'utilisateur.
+      </p>
+      <div class="hero-actions fade-in">
+        <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+        <a href="#contact" class="btn btn-ghost">Me contacter</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========== À PROPOS ========== -->
+  <section class="section" id="about">
+    <div class="container">
+      <span class="section-tag">01 — À propos</span>
+      <h2 class="section-title">Qui suis-je ?</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Étudiant en <strong>Master 1 Informatique</strong> à l'ITU University Andoharanofotsy - Madagascar,
+            je me spécialise dans le développement full stack et l'intelligence artificielle.
+            J'aime construire des produits utiles, du backend jusqu'à l'interface.
+          </p>
+          <p>
+            En dehors du code, je suis amateur de photographie et un cinéphile passionné.
+          </p>
+          <p>
+            Je suis actuellement à la recherche d'un <strong>stage</strong>
+            ou d'une <strong>alternance</strong> ou d'un <strong>emploi</strong>.
+          </p>
+        </div>
+        <div class="about-cards">
+          <div class="info-card">
+            <span class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3.33 1.67 8.67 1.67 12 0v-5"/></svg>
+            </span>
+            <div>
+              <strong>Formation</strong>
+              <p>M1 Informatique · IT University Andoharanofotsy - Madagascar</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <div>
+              <strong>Localisation</strong>
+              <p>Antananarivo - Madagascar</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </span>
+            <div>
+              <strong>Statut</strong>
+              <p>Ouvert aux opportunités</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            <div>
+              <strong>Langues</strong>
+              <p>Français · Anglais · Malgache</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJETS ========== -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <span class="section-tag">02 — Projets</span>
+      <h2 class="section-title">Ce que j'ai construit</h2>
+      <div class="projects-grid">
+
+        <!-- PROJET 1 -->
+        <article class="project-card">
+          <div class="project-img-wrap">
+            <img src="assets/images/FormaFusion.png" alt="Projet 1" class="project-img"
+              onerror="this.parentElement.classList.add('no-img')" />
+            <div class="project-img-placeholder">Projet 1</div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">PHP</span>
+              <span class="tag">Laravel</span>
+              <span class="tag">Blade</span>
+              <span class="tag">MySQL</span>
+            </div>
+            <h3 class="project-title">FormaFusion</h3>
+            <p class="project-desc">
+              Platforme de gestion de formations en ligne, conçue pour les centres de formation.
+            </p>
+          </div>
+        </article>
+
+        <!-- PROJET 2 -->
+        <article class="project-card">
+          <div class="project-img-wrap">
+            <img src="assets/images/project2.jpg" alt="Projet 2" class="project-img"
+              onerror="this.parentElement.classList.add('no-img')" />
+            <div class="project-img-placeholder">Projet 2</div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">Javascript</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">Express.js</span>
+            </div>
+            <h3 class="project-title">Site E-Commerce pour Centres Commerciales - [Prototype]</h3>
+            <p class="project-desc">
+              Mini projet de site e-commerce pour les centres commerciales, développé en Node.js avec Express et MongoDB.
+              Permet la gestion des produits, des utilisateurs et des commandes.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/litakelykill/m1p13mean-sitraka-hasina-backend" target="_blank" class="link-btn">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJET 3 -->
+        <article class="project-card">
+          <div class="project-img-wrap">
+            <img src="assets/images/mini-IA.png" alt="Projet 3" class="project-img"
+              onerror="this.parentElement.classList.add('no-img')" />
+            <div class="project-img-placeholder">Projet 3</div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Mistral</span>
+              <span class="tag">Ollama</span>
+            </div>
+            <h3 class="project-title">Mini projet IA - Assistant recette de cuisine</h3>
+            <p class="project-desc">
+              Mini projet de développement d'un assistant de recette de cuisine utilisant le modèle de langage Mistral via Ollama.
+              Permet aux utilisateurs d'obtenir des recettes.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COMPÉTENCES ========== -->
+  <section class="section" id="skills">
+    <div class="container">
+      <span class="section-tag">03 — Compétences</span>
+      <h2 class="section-title">Mes stacks techniques</h2>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">Langages</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot"></span>Java</li>
+            <li class="skill-item"><span class="skill-dot"></span>PHP</li>
+            <li class="skill-item"><span class="skill-dot"></span>Python</li>
+            <li class="skill-item"><span class="skill-dot"></span>JavaScript / TypeScript</li>
+            <li class="skill-item"><span class="skill-dot"></span>SQL</li>
+            <li class="skill-item"><span class="skill-dot"></span>C / C++</li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">Frameworks & Libs</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot"></span>React / Angular</li>
+            <li class="skill-item"><span class="skill-dot"></span>Django</li>
+            <li class="skill-item"><span class="skill-dot"></span>Laravel / Symfony</li>
+            <li class="skill-item"><span class="skill-dot"></span>Spring Boot</li>
+            <li class="skill-item"><span class="skill-dot"></span>Node.js / Express</li>
+            <li class="skill-item"><span class="skill-dot"></span>scikit-learn</li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">Outils & DevOps</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot"></span>Git / GitHub</li>
+            <li class="skill-item"><span class="skill-dot"></span>Docker</li>
+            <li class="skill-item"><span class="skill-dot"></span>Linux / Bash</li>
+            <li class="skill-item"><span class="skill-dot"></span>PostgreSQL / MongoDB</li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">Méthodes</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot"></span>Agile / Scrum</li>
+            <li class="skill-item"><span class="skill-dot"></span>Tests unitaires</li>
+            <li class="skill-item"><span class="skill-dot"></span>REST API Design</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARCOURS ========== -->
+  <section class="section section-alt" id="experience">
+    <div class="container">
+      <span class="section-tag">04 — Parcours</span>
+      <h2 class="section-title">Mon histoire</h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <h3>Master 1 Informatique</h3>
+              <span class="timeline-date">2025 – En cours</span>
+            </div>
+            <p class="timeline-org">IT University Madagascar, Antanananrivo</p>
+            <p>Tronc commun</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <h3>Licence Informatique, Développement d'applications</h3>
+              <span class="timeline-date">2020 – 2025</span>
+            </div>
+            <p class="timeline-org">IT University Madagascar, Antanananrivo</p>
+            <p>Fondamentaux : algorithmique, systèmes, bases de données, réseaux.
+               Mention Assez-Bien.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <h3>Stage — Développeur Junior FullStack</h3>
+              <span class="timeline-date">Août 2024 - Mars 2025</span>
+            </div>
+            <p class="timeline-org">UpSkill · Antananarivo</p>
+            <p>Platforme de gestion de Centres de Formations - FormaFusion</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="section" id="contact">
+    <div class="container contact-container">
+      <span class="section-tag">05 — Contact</span>
+      <h2 class="section-title">Travaillons ensemble</h2>
+      <p class="contact-intro">
+        Tu as un projet, une opportunité ou juste envie d'échanger ? Je réponds sous 48h.
+      </p>
+      <div class="social-links">
+        <a href="https://github.com/litakelykill" target="_blank" class="social-btn" aria-label="GitHub">
+          <!-- GitHub icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="www.linkedin.com/in/sitraka-ralamboranto-6161b7328" target="_blank" class="social-btn" aria-label="LinkedIn">
+          <!-- LinkedIn icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p>© 2026 Sitraka Ralamboranto · Conçu & développé à la main · <a href="https://github.com/tonprofil/portfolio" target="_blank">Code source</a></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
