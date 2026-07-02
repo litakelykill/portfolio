@@ -1,13 +1,17 @@
 /* ============================================================
    PORTFOLIO – main.js
    Fonctionnalités :
-     1. Navbar : scroll shadow + active link
+     1. Thème clair / sombre (persisté en localStorage)
      2. Menu burger mobile
-     3. Reveal on scroll (IntersectionObserver)
-     4. Active nav link selon la section visible
+     3. Navigation page par page (dots, clavier, molette, tactile)
+     4. Animations d'entrée du hero + typewriter du panneau code
+     5. Reveal en cascade des éléments de chaque page
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  const prefersReducedMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ----------------------------------------------------------
      0. THÈME CLAIR / SOMBRE
@@ -26,14 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ----------------------------------------------------------
-     1. NAVBAR — shadow permanent (body overflow:hidden, pas de scroll)
-  ---------------------------------------------------------- */
-  const navbar = document.getElementById('navbar');
-  navbar.classList.add('scrolled');
-
-
-  /* ----------------------------------------------------------
-     2. MENU BURGER (mobile)
+     1. MENU BURGER (mobile)
   ---------------------------------------------------------- */
   const burger   = document.getElementById('burger');
   const navLinks = document.querySelector('.nav-links');
@@ -47,12 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
     });
   });
 
 
   /* ----------------------------------------------------------
-     3. NAVIGATION DE PAGES — une section = une page
+     2. NAVIGATION DE PAGES — une section = une page
   ---------------------------------------------------------- */
   const wrapper  = document.getElementById('pagesWrapper');
   const dotsWrap = document.getElementById('pageDots');
@@ -66,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pages = Array.from(wrapper.querySelectorAll(':scope > section'));
   let current     = 0;
   let animating   = false;
-  const DURATION  = 380; // ms — durée de la transition CSS
+  const DURATION  = 420; // ms — durée de la transition CSS
 
   /* Création des dots */
   const dots = pages.map((page, i) => {
@@ -92,23 +90,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ── Typewriter code panel ── */
+  // [ plaintext, highlightedHTML ]
+  const CODE_LINES = [
+    ['// about_me.js',                '<span class="c-cmt">// about_me.js</span>'],
+    ['',                              ''],
+    ['const sitraka = {',             '<span class="c-kw">const</span> <span class="c-id">sitraka</span> = {'],
+    ['  name:  "Sitraka R.",',        '  <span class="c-key">name</span>:  <span class="c-str">"Sitraka R."</span>,'],
+    ['  role:  "Full Stack Dev",',    '  <span class="c-key">role</span>:  <span class="c-str">"Full Stack Dev"</span>,'],
+    ['  stack: ["Angular","JS/TS"],', '  <span class="c-key">stack</span>: [<span class="c-str">"Angular"</span>,<span class="c-str">"JS/TS"</span>],'],
+    ['  ml:    true,',                '  <span class="c-key">ml</span>:    <span class="c-bool">true</span>,'],
+    ['  status: available(),',        '  <span class="c-key">status</span>: <span class="c-fn">available</span>(),'],
+    ['  secret: "appuie sur [X]",',   '  <span class="c-key">secret</span>: <span class="c-str">"appuie sur [X]"</span>,'],
+    ['};',                            '};'],
+  ];
+
   function startCodeTyper() {
     const el = document.getElementById('heroCodeText');
     if (!el) return;
     el.innerHTML = '';
 
-    // [ plaintext, highlightedHTML ]
-    const lines = [
-      ['// about_me.js',               '<span class="c-cmt">// about_me.js</span>'],
-      ['',                             ''],
-      ['const sitraka = {',            '<span class="c-kw">const</span> <span class="c-id">sitraka</span> = {'],
-      ['  name:  "Sitraka R.",',       '  <span class="c-key">name</span>:  <span class="c-str">"Sitraka R."</span>,'],
-      ['  role:  "Full Stack Dev",',   '  <span class="c-key">role</span>:  <span class="c-str">"Full Stack Dev"</span>,'],
-      ['  stack: ["Angular","JS/TS"],', '  <span class="c-key">stack</span>: [<span class="c-str">"Angular"</span>,<span class="c-str">"JS/TS"</span>],'],
-      ['  ml:    true,',               '  <span class="c-key">ml</span>:    <span class="c-bool">true</span>,'],
-      ['  status: available(),',       '  <span class="c-key">status</span>: <span class="c-fn">available</span>(),'],
-      ['};',                           '};'],
-    ];
+    /* Mouvement réduit : affiche le code d'un coup, sans effet */
+    if (prefersReducedMotion) {
+      el.innerHTML = CODE_LINES
+        .map(([, html]) => `<span class="code-line">${html || ' '}</span>`)
+        .join('');
+      return;
+    }
 
     const cursor = document.createElement('span');
     cursor.className = 'code-cursor';
@@ -118,9 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let li = 0, ci = 0, lineDiv = null;
 
     function tick() {
-      if (li >= lines.length) return; // fini, curseur reste
+      if (li >= CODE_LINES.length) return; // fini, curseur reste
 
-      const [plain, html] = lines[li];
+      const [plain, html] = CODE_LINES[li];
 
       if (ci === 0) {
         lineDiv = document.createElement('span');
@@ -140,19 +147,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    setTimeout(tick, 680);
+    setTimeout(tick, 620);
   }
 
-  /* Animation comics sur le hero — rejoue à chaque visite */
+  /* Animation d'entrée du hero — rejoue à chaque visite */
   function animateHeroIn() {
     const steps = [
-      { sel: '.hero-label',   anim: 'comics-drop',  dur: 0.48, base: 0.00 },
-      { sel: '.hero-title',   anim: 'comics-slam',  dur: 0.58, base: 0.12 },
-      { sel: '.hero-quote',   anim: 'comics-swipe', dur: 0.48, base: 0.26 },
-      { sel: '.hero-sub',     anim: 'fadeUp',        dur: 0.42, base: 0.38 },
-      { sel: '.hero-actions', anim: 'fadeUp',        dur: 0.42, base: 0.50 },
+      { sel: '.hero-label',   anim: 'fadeUp',     dur: 0.45, base: 0.00 },
+      { sel: '.hero-title',   anim: 'fadeUp',     dur: 0.55, base: 0.10 },
+      { sel: '.hero-quote',   anim: 'slideRight', dur: 0.50, base: 0.30 },
+      { sel: '.hero-actions', anim: 'fadeUp',     dur: 0.45, base: 0.45 },
     ];
-    const roleSteps = { anim: 'comics-pop', dur: 0.38, base: 0.36 };
+    const roleSteps = { anim: 'popIn', dur: 0.38, base: 0.28 };
+
+    if (prefersReducedMotion) {
+      startCodeTyper();
+      return; // le CSS force déjà l'opacité à 1
+    }
 
     // Phase 1 : effacer toutes les animations en cours
     steps.forEach(({ sel }) => {
@@ -165,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
       el.style.opacity   = '0';
       el.style.animation = 'none';
     });
+    const codePanel = document.getElementById('heroCode');
+    if (codePanel) { codePanel.style.opacity = '0'; codePanel.style.animation = 'none'; }
 
     // Phase 2 : forcer reflow puis relancer
     requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -174,14 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.opacity   = '';
         el.style.animation = `${anim} ${dur}s cubic-bezier(.22,1,.36,1) ${base}s both`;
       });
+      document.querySelectorAll('.hero-roles').forEach(el => {
+        el.style.opacity = '1';
+      });
       document.querySelectorAll('.role-tag').forEach((el, i) => {
         el.style.opacity   = '';
-        el.style.animation = `${roleSteps.anim} ${roleSteps.dur}s cubic-bezier(.22,1,.36,1) ${(roleSteps.base + i * 0.07).toFixed(2)}s both`;
+        el.style.animation = `${roleSteps.anim} ${roleSteps.dur}s cubic-bezier(.22,1,.36,1) ${(roleSteps.base + i * 0.08).toFixed(2)}s both`;
       });
 
       // Panneau code : fade-in + typewriter
-      const codePanel = document.getElementById('heroCode');
-      if (codePanel) codePanel.style.animation = 'fadeUp 0.5s cubic-bezier(.22,1,.36,1) 0.18s both';
+      if (codePanel) {
+        codePanel.style.opacity   = '';
+        codePanel.style.animation = 'fadeUp 0.55s cubic-bezier(.22,1,.36,1) 0.18s both';
+      }
       startCodeTyper();
     }));
   }
@@ -193,27 +211,21 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (page.id === 'experience') {
-      // Réinitialise le comic book au chapitre 1
-      if (typeof window._expReset === 'function') window._expReset();
-      // Révèle uniquement le tag et le titre de section
-      const hdr = page.querySelectorAll('.section-tag, .section-title');
-      hdr.forEach(el => { el.classList.add('reveal'); el.classList.remove('visible'); });
-      requestAnimationFrame(() => {
-        hdr.forEach((el, i) => { setTimeout(() => el.classList.add('visible'), i * 55); });
-      });
-      return;
-    }
-
     const targets = page.querySelectorAll(
       '.section-tag, .section-title, .info-card, .project-card, ' +
-      '.skill-group, .about-text p, ' +
-      '.contact-intro, .contact-email, .social-links'
+      '.skill-group, .about-text p, .timeline-item, ' +
+      '.contact-intro, .social-links'
     );
     targets.forEach(el => {
       el.classList.add('reveal');
       el.classList.remove('visible');
     });
+
+    if (prefersReducedMotion) {
+      targets.forEach(el => el.classList.add('visible'));
+      return;
+    }
+
     requestAnimationFrame(() => {
       targets.forEach((el, i) => {
         setTimeout(() => el.classList.add('visible'), i * 55);
@@ -243,8 +255,10 @@ document.addEventListener('DOMContentLoaded', () => {
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  /* Clavier */
+  /* Clavier — uniquement si le focus n'est pas dans un champ */
   document.addEventListener('keydown', (e) => {
+    const tag = document.activeElement?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
     if (e.key === 'ArrowUp'   || e.key === 'PageUp')   { e.preventDefault(); goTo(current - 1); }
   });
@@ -284,86 +298,64 @@ document.addEventListener('DOMContentLoaded', () => {
   syncControls();
 
 
-  /* ────────────────────────────────────────────
-     COMIC BOOK — Mon Histoire (feuilletage manuel)
-     ──────────────────────────────────────────── */
-  const expBook  = document.getElementById('expBook');
-  if (expBook) {
-    const expPages = Array.from(expBook.querySelectorAll('.comic-page'));
-    const expPrev  = document.getElementById('expPrev');
-    const expNext  = document.getElementById('expNext');
-    const expPager = document.getElementById('expPager');
-    let expIdx  = 0;
-    let expBusy = false;
-    const BOOK_DUR = 620; // ms — out(380) + delay(220) + in(380) ≈ 620 avant fin
+  /* ----------------------------------------------------------
+     3. INTERACTIONS — boutons magnétiques & tilt 3D
+  ---------------------------------------------------------- */
+  if (!prefersReducedMotion) {
 
-    function expSync() {
-      if (expPrev)  expPrev.disabled  = expIdx === 0;
-      if (expNext)  expNext.disabled  = expIdx === expPages.length - 1;
-      if (expPager) expPager.textContent = `${expIdx + 1} / ${expPages.length}`;
-    }
+    /* Boutons "magnétiques" : attirés par le curseur */
+    document.querySelectorAll('.btn, .nav-cta, .social-btn, .theme-toggle').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width  / 2;
+        const y = e.clientY - r.top  - r.height / 2;
+        btn.style.transform = `translate(${x * 0.22}px, ${y * 0.3}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
 
-    function turnTo(next) {
-      if (next < 0 || next >= expPages.length || next === expIdx || expBusy) return;
-      expBusy = true;
-      const dir = next > expIdx ? 'fwd' : 'back';
-      const out  = expPages[expIdx];
-      const inn  = expPages[next];
-
-      out.classList.remove('active');
-      out.classList.add(`out-${dir}`);
-      inn.classList.add(`in-${dir}`);
-
-      setTimeout(() => {
-        out.classList.remove(`out-${dir}`);
-        inn.classList.remove(`in-${dir}`);
-        inn.classList.add('active');
-        expIdx = next;
-        expSync();
-        expBusy = false;
-      }, BOOK_DUR);
-    }
-
-    /* Init */
-    expPages[0].classList.add('active');
-    expSync();
-
-    if (expPrev) expPrev.addEventListener('click', () => turnTo(expIdx - 1));
-    if (expNext) expNext.addEventListener('click', () => turnTo(expIdx + 1));
-
-    /* Swipe horizontal — tourner les pages */
-    let bx = 0, by = 0;
-    expBook.addEventListener('touchstart', e => {
-      bx = e.touches[0].clientX;
-      by = e.touches[0].clientY;
-    }, { passive: true });
-    expBook.addEventListener('touchend', e => {
-      const dx = bx - e.changedTouches[0].clientX;
-      const dy = by - e.changedTouches[0].clientY;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-        dx > 0 ? turnTo(expIdx + 1) : turnTo(expIdx - 1);
-      }
-    }, { passive: true });
-
-    /* Reset au chapitre 1 quand on revient sur la section */
-    window._expReset = function () {
-      expPages.forEach(p => p.classList.remove('active', 'out-fwd', 'in-fwd', 'out-back', 'in-back'));
-      expIdx  = 0;
-      expBusy = false;
-      expPages[0].classList.add('active');
-      expSync();
-    };
+    /* Tilt 3D sur les cartes */
+    document.querySelectorAll('.project-card, .info-card, .skill-group, .timeline-content').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r  = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width  - 0.5;
+        const py = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transform =
+          `perspective(800px) rotateY(${(px * 7).toFixed(2)}deg) rotateX(${(-py * 7).toFixed(2)}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
   }
+
+
+  /* ----------------------------------------------------------
+     4. EASTER EGG — touche X : flash d'énergie + mode mutant
+  ---------------------------------------------------------- */
+  let xFlashBusy = false;
+
+  function triggerXMode() {
+    const html = document.documentElement;
+    const activating = !html.hasAttribute('data-x-mode');
+    html.toggleAttribute('data-x-mode');
+
+    if (prefersReducedMotion || xFlashBusy) return;
+    xFlashBusy = true;
+
+    const flash = document.createElement('div');
+    flash.className = 'x-flash';
+    flash.setAttribute('aria-hidden', 'true');
+    flash.innerHTML =
+      '<span class="x-beam x-beam--a"></span>' +
+      '<span class="x-beam x-beam--b"></span>' +
+      `<span class="x-flash-text">${activating ? 'Mode mutant : activé' : 'Retour au calme'}</span>`;
+    document.body.appendChild(flash);
+    setTimeout(() => { flash.remove(); xFlashBusy = false; }, 1200);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    const tag = document.activeElement?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.key.toLowerCase() === 'x' && !e.ctrlKey && !e.metaKey && !e.altKey) triggerXMode();
+  });
 
 });
-
-
-/* ---- Active nav link style (injecté en JS pour ne pas polluer le CSS) ---- */
-const style = document.createElement('style');
-style.textContent = `
-  .nav-links a.active-nav {
-    color: var(--accent) !important;
-    font-weight: 500;
-  }
-`;
-document.head.appendChild(style);
