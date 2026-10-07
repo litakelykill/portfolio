@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ['  stack: ["Angular","JS/TS"],', '  <span class="c-key">stack</span>: [<span class="c-str">"Angular"</span>,<span class="c-str">"JS/TS"</span>],'],
     ['  ml:    true,',                '  <span class="c-key">ml</span>:    <span class="c-bool">true</span>,'],
     ['  status: available(),',        '  <span class="c-key">status</span>: <span class="c-fn">available</span>(),'],
-    ['  secret: "appuie sur [X]",',   '  <span class="c-key">secret</span>: <span class="c-str">"appuie sur [X]"</span>,'],
+    ['  secret: "appuie sur [K]",',   '  <span class="c-key">secret</span>: <span class="c-str">"appuie sur [K]"</span>,'],
     ['};',                            '};'],
   ];
 
@@ -329,33 +329,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ----------------------------------------------------------
-     4. EASTER EGG — touche X : flash d'énergie + mode mutant
+     4. EASTER EGG — touche K : Kirby Krackle
+     Nuée de points façon comics qui crépite sur les bords
+     de l'écran, en hommage au style de Jack Kirby.
   ---------------------------------------------------------- */
-  let xFlashBusy = false;
+  let krackleBusy = false;
 
-  function triggerXMode() {
-    const html = document.documentElement;
-    const activating = !html.hasAttribute('data-x-mode');
-    html.toggleAttribute('data-x-mode');
+  function triggerKirbyKrackle() {
+    if (prefersReducedMotion || krackleBusy) return;
+    krackleBusy = true;
 
-    if (prefersReducedMotion || xFlashBusy) return;
-    xFlashBusy = true;
+    const burst = document.createElement('div');
+    burst.className = 'krackle-burst';
+    burst.setAttribute('aria-hidden', 'true');
 
-    const flash = document.createElement('div');
-    flash.className = 'x-flash';
-    flash.setAttribute('aria-hidden', 'true');
-    flash.innerHTML =
-      '<span class="x-beam x-beam--a"></span>' +
-      '<span class="x-beam x-beam--b"></span>' +
-      `<span class="x-flash-text">${activating ? 'Mode mutant : activé' : 'Retour au calme'}</span>`;
-    document.body.appendChild(flash);
-    setTimeout(() => { flash.remove(); xFlashBusy = false; }, 1200);
+    const COUNT = 48;
+    for (let i = 0; i < COUNT; i++) {
+      const dot  = document.createElement('span');
+      dot.className = 'krackle-dot';
+
+      // Points regroupés en bordure, comme un cadre de bande dessinée
+      const edge = Math.random();
+      let x, y;
+      if      (edge < 0.25) { x = Math.random() * 100;      y = Math.random() * 18; }
+      else if (edge < 0.50) { x = Math.random() * 100;      y = 82 + Math.random() * 18; }
+      else if (edge < 0.75) { x = Math.random() * 16;       y = Math.random() * 100; }
+      else                  { x = 84 + Math.random() * 16;  y = Math.random() * 100; }
+
+      const size = 8 + Math.random() * 34;
+      dot.style.width  = `${size}px`;
+      dot.style.height = `${size}px`;
+      dot.style.left   = `${x}%`;
+      dot.style.top    = `${y}%`;
+      dot.style.animationDelay    = `${(Math.random() * 0.35).toFixed(2)}s`;
+      dot.style.animationDuration = `${(0.9 + Math.random() * 0.6).toFixed(2)}s`;
+      if (Math.random() < 0.3) dot.classList.add('krackle-dot--accent');
+
+      burst.appendChild(dot);
+    }
+
+    document.body.appendChild(burst);
+    setTimeout(() => { burst.remove(); krackleBusy = false; }, 1700);
   }
 
   document.addEventListener('keydown', (e) => {
     const tag = document.activeElement?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-    if (e.key.toLowerCase() === 'x' && !e.ctrlKey && !e.metaKey && !e.altKey) triggerXMode();
+    if (e.key.toLowerCase() === 'k' && !e.ctrlKey && !e.metaKey && !e.altKey) triggerKirbyKrackle();
   });
 
 });
