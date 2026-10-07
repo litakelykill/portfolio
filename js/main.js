@@ -1,33 +1,16 @@
 /* ============================================================
    PORTFOLIO – main.js
    Fonctionnalités :
-     1. Thème clair / sombre (persisté en localStorage)
-     2. Menu burger mobile
-     3. Navigation page par page (dots, clavier, molette, tactile)
-     4. Animations d'entrée du hero + typewriter du panneau code
-     5. Reveal en cascade des éléments de chaque page
+     1. Menu burger mobile
+     2. Navigation page par page (dots, clavier, molette, tactile)
+     3. Animations d'entrée du hero + typewriter du panneau code
+     4. Reveal en cascade des éléments de chaque page
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const prefersReducedMotion =
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ----------------------------------------------------------
-     0. THÈME CLAIR / SOMBRE
-  ---------------------------------------------------------- */
-  const themeToggle = document.getElementById('themeToggle');
-  const savedTheme  = localStorage.getItem('theme') || 'light';
-
-  if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-
-  themeToggle.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const next   = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-  });
-
 
   /* ----------------------------------------------------------
      1. MENU BURGER (mobile)
@@ -299,12 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ----------------------------------------------------------
-     3. INTERACTIONS — boutons magnétiques & tilt 3D
+     INTERACTIONS — boutons magnétiques & tilt 3D
   ---------------------------------------------------------- */
   if (!prefersReducedMotion) {
 
     /* Boutons "magnétiques" : attirés par le curseur */
-    document.querySelectorAll('.btn, .nav-cta, .social-btn, .theme-toggle').forEach(btn => {
+    document.querySelectorAll('.btn, .nav-cta, .social-btn').forEach(btn => {
       btn.addEventListener('mousemove', (e) => {
         const r = btn.getBoundingClientRect();
         const x = e.clientX - r.left - r.width  / 2;
@@ -329,11 +312,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ----------------------------------------------------------
-     4. EASTER EGG — touche K : Kirby Krackle
-     Nuée de points façon comics qui crépite sur les bords
-     de l'écran, en hommage au style de Jack Kirby.
+     EASTER EGG — touche K : Kirby Krackle
+     Nuages amorphes à texture tramée + nuée de points façon
+     comics qui crépitent sur les bords de l'écran, en
+     hommage au style de Jack Kirby.
   ---------------------------------------------------------- */
   let krackleBusy = false;
+
+  /* Génère un border-radius aléatoire pour une forme de "nuage" organique */
+  function randomBlobRadius() {
+    const r = () => 30 + Math.round(Math.random() * 40); // 30 % – 70 %
+    return `${r()}% ${r()}% ${r()}% ${r()}% / ${r()}% ${r()}% ${r()}% ${r()}%`;
+  }
 
   function triggerKirbyKrackle() {
     if (prefersReducedMotion || krackleBusy) return;
@@ -343,6 +333,35 @@ document.addEventListener('DOMContentLoaded', () => {
     burst.className = 'krackle-burst';
     burst.setAttribute('aria-hidden', 'true');
 
+    // Nuages amorphes (halftone), groupés sur les bords comme une explosion
+    const CLOUD_COUNT = 10;
+    for (let i = 0; i < CLOUD_COUNT; i++) {
+      const cloud = document.createElement('span');
+      cloud.className = 'krackle-cloud';
+
+      const edge = Math.random();
+      let x, y;
+      if      (edge < 0.25) { x = Math.random() * 100;     y = -6 + Math.random() * 20; }
+      else if (edge < 0.50) { x = Math.random() * 100;     y = 86 + Math.random() * 20; }
+      else if (edge < 0.75) { x = -6 + Math.random() * 20; y = Math.random() * 100; }
+      else                  { x = 86 + Math.random() * 20; y = Math.random() * 100; }
+
+      const w = 70 + Math.random() * 130;
+      const h = w * (0.7 + Math.random() * 0.5);
+      cloud.style.width  = `${w}px`;
+      cloud.style.height = `${h}px`;
+      cloud.style.left   = `${x}%`;
+      cloud.style.top    = `${y}%`;
+      cloud.style.borderRadius = randomBlobRadius();
+      cloud.style.backgroundSize = `${6 + Math.random() * 6}px ${6 + Math.random() * 6}px`;
+      cloud.style.animationDelay    = `${(Math.random() * 0.3).toFixed(2)}s`;
+      cloud.style.animationDuration = `${(1.1 + Math.random() * 0.6).toFixed(2)}s`;
+      if (Math.random() < 0.4) cloud.classList.add('krackle-cloud--accent');
+
+      burst.appendChild(cloud);
+    }
+
+    // Points solides, dispersés par-dessus les nuages
     const COUNT = 48;
     for (let i = 0; i < COUNT; i++) {
       const dot  = document.createElement('span');

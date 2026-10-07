@@ -1,6 +1,6 @@
 /* ============================================================
    BACKGROUND.JS — Arrière-plan dynamique
-   Réseau de particules discret, adapté au thème clair/sombre.
+   Réseau de particules discret, thème sombre uniquement.
    Désactivé si l'utilisateur préfère un mouvement réduit.
    ============================================================ */
 (function () {
@@ -20,16 +20,8 @@
   window.addEventListener('resize', resize, { passive: true });
   resize();
 
-  /* ── Détection thème ── */
-  function isDark() {
-    return document.documentElement.getAttribute('data-theme') === 'dark';
-  }
-
   /* ── Palette (nuances de vert émeraude, accordée au CSS) ── */
-  const LIGHT_COLORS = ['#047857', '#059669', '#10B981', '#34D399', '#6EE7B7'];
-  const DARK_COLORS  = ['#34D399', '#10B981', '#6EE7B7', '#A7F3D0', '#059669'];
-
-  function palette() { return isDark() ? DARK_COLORS : LIGHT_COLORS; }
+  const COLORS = ['#34D399', '#10B981', '#6EE7B7', '#A7F3D0', '#059669'];
 
   /* ── Souris : les particules s'y connectent et s'en écartent ── */
   const mouse = { x: -9999, y: -9999 };
@@ -53,7 +45,7 @@
       this.vx = (Math.random() - 0.5) * 0.35;
       this.vy = (Math.random() - 0.5) * 0.35;
       this.r  = 1.2 + Math.random() * 2.2;
-      this.colorIdx = Math.floor(Math.random() * LIGHT_COLORS.length);
+      this.colorIdx = Math.floor(Math.random() * COLORS.length);
     }
 
     tick() {
@@ -75,7 +67,7 @@
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = palette()[this.colorIdx];
+      ctx.fillStyle = COLORS[this.colorIdx];
       ctx.globalAlpha = 0.35;
       ctx.fill();
     }
@@ -84,7 +76,6 @@
   const particles = Array.from({ length: COUNT }, () => new Particle());
 
   function drawLinks() {
-    const stroke = isDark() ? '255,255,255' : '21,23,37';
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const a = particles[i], b = particles[j];
@@ -92,7 +83,7 @@
         const d = Math.hypot(dx, dy);
         if (d < LINK_DIST) {
           ctx.globalAlpha = (1 - d / LINK_DIST) * 0.10;
-          ctx.strokeStyle = `rgb(${stroke})`;
+          ctx.strokeStyle = 'rgb(255,255,255)';
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -111,7 +102,7 @@
       const d = Math.hypot(p.x - mouse.x, p.y - mouse.y);
       if (d < MOUSE_DIST) {
         ctx.globalAlpha = (1 - d / MOUSE_DIST) * 0.35;
-        ctx.strokeStyle = palette()[p.colorIdx];
+        ctx.strokeStyle = COLORS[p.colorIdx];
         ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.moveTo(mouse.x, mouse.y);
