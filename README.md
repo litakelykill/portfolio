@@ -1,6 +1,6 @@
 # Portfolio – Sitraka Ralamboranto
 
-Portfolio personnel — développeur full stack & machine learning, étudiant en M1 Informatique (IT University, Madagascar).
+Portfolio personnel — développeur full stack & machine learning, étudiant en M2 MBDS (Polytech Nice Sophia, Université Côte d'Azur).
 
 ## Stack
 

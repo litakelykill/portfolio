@@ -25,9 +25,9 @@
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
-  /* ── Palette (bleu → cyan → or, accordée au CSS) ── */
-  const LIGHT_COLORS = ['#2563EB', '#06B6D4', '#F59E0B', '#10B981', '#F43F5E'];
-  const DARK_COLORS  = ['#60A5FA', '#22D3EE', '#FBBF24', '#34D399', '#FB7185'];
+  /* ── Palette (nuances de vert émeraude, accordée au CSS) ── */
+  const LIGHT_COLORS = ['#047857', '#059669', '#10B981', '#34D399', '#6EE7B7'];
+  const DARK_COLORS  = ['#34D399', '#10B981', '#6EE7B7', '#A7F3D0', '#059669'];
 
   function palette() { return isDark() ? DARK_COLORS : LIGHT_COLORS; }
 
