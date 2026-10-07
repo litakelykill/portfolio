@@ -737,22 +737,11 @@ button { font-family: inherit; }
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   position: relative;
 }
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--panel-col), var(--brand-2));
-  opacity: 0;
-  transition: opacity var(--transition);
-  z-index: 2;
-}
 .project-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
   border-color: color-mix(in srgb, var(--panel-col) 40%, transparent);
 }
-.project-card:hover::before { opacity: 1; }
 
 .project-img-wrap {
   position: relative; height: 180px;
